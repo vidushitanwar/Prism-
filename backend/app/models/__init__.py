@@ -1,0 +1,16 @@
+from app.models.models import (  # noqa: F401
+    Skill,
+    Occupation,
+    Industry,
+    Location,
+    Education,
+    OccupationSkill,
+    SkillRelationship,
+    IndustrySkill,
+    OccupationTransition,
+    SkillOccurrence,
+    TemporalMetric,
+    WorkforceSignal,
+    JobPosting,
+    SimulationResult,
+)

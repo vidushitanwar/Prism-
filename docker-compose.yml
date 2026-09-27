@@ -1,0 +1,25 @@
+version: "3.9"
+
+# Optional. The app runs fine without Docker using the default SQLite
+# database (see .env.example). Use this compose file if you want a real
+# PostgreSQL instance instead.
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-prism_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env before starting Docker}
+      POSTGRES_DB: ${POSTGRES_DB:-prism}
+    ports:
+      - "5432:5432"
+    volumes:
+      - prism_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U prism_user -d prism"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  prism_pgdata:

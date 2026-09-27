@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    @apply font-body antialiased;
+    background-color: #06070d;
+    background-image: radial-gradient(circle at 20% 20%, rgba(139,92,246,0.18), transparent 40%),
+      radial-gradient(circle at 80% 0%, rgba(34,211,238,0.14), transparent 45%),
+      radial-gradient(circle at 50% 100%, rgba(245,158,11,0.10), transparent 40%);
+    background-attachment: fixed;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply bg-prism-800/50 backdrop-blur-xl border border-prism-600/40 rounded-2xl;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 font-medium
+      bg-spectrum-violet text-white transition-all duration-200
+      hover:brightness-110 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-spectrum-violet/30
+      active:translate-y-0;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 font-medium
+      border border-prism-500/60 text-prism-100 transition-all duration-200
+      hover:border-spectrum-cyan/70 hover:text-spectrum-cyan hover:-translate-y-0.5
+      active:translate-y-0;
+  }
+}

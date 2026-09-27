@@ -1,0 +1,149 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Install backend deps",
+			"type": "shell",
+			"command": "C:\\Users\\vidus\\Downloads\\prism\\.venv\\Scripts\\python.exe -m pip install -r C:\\Users\\vidus\\Downloads\\prism\\backend\\requirements.txt",
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Check Python installations",
+			"type": "shell",
+			"command": "py -0p",
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Create Python 3.11 venv",
+			"type": "shell",
+			"command": "py -3.11 -m venv .venv",
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Install backend deps in 3.11 venv",
+			"type": "shell",
+			"command": ".\\.venv\\Scripts\\python.exe -m pip install -r backend\\requirements.txt",
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Install frontend deps",
+			"type": "shell",
+			"command": "cd /d \"C:\\Users\\vidus\\Downloads\\prism\\frontend\" && npm install",
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Frontend install via cmd",
+			"type": "shell",
+			"command": "cmd /C \"cd /d C:\\Users\\vidus\\Downloads\\prism\\frontend && npm install\"",
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Frontend install via PowerShell",
+			"type": "shell",
+			"command": "Set-Location 'C:\\Users\\vidus\\Downloads\\prism\\frontend'; npm install",
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Install frontend deps via npm.cmd",
+			"type": "shell",
+			"command": "Set-Location 'C:\\Users\\vidus\\Downloads\\prism\\frontend'; & 'C:\\Program Files\\nodejs\\npm.cmd' install",
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Start backend server",
+			"type": "shell",
+			"command": "Set-Location 'C:\\Users\\vidus\\Downloads\\prism'; & '.\\.venv\\Scripts\\python.exe' -m uvicorn app.main:app --host 0.0.0.0 --port 8000",
+			"isBackground": true,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Start backend from backend folder",
+			"type": "shell",
+			"command": "Set-Location 'C:\\Users\\vidus\\Downloads\\prism\\backend'; & '..\\.venv\\Scripts\\python.exe' -m uvicorn app.main:app --host 0.0.0.0 --port 8000",
+			"isBackground": true,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Start backend server fixed DB path",
+			"type": "shell",
+			"command": "Set-Location 'C:\\Users\\vidus\\Downloads\\prism\\backend'; & '..\\.venv\\Scripts\\python.exe' -m uvicorn app.main:app --host 0.0.0.0 --port 8000",
+			"isBackground": true,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Start backend server after fix",
+			"type": "shell",
+			"command": "Set-Location 'C:\\Users\\vidus\\Downloads\\prism\\backend'; & '..\\.venv\\Scripts\\python.exe' -m uvicorn app.main:app --host 0.0.0.0 --port 8000",
+			"isBackground": true,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Start frontend dev server",
+			"type": "shell",
+			"command": "Set-Location 'C:\\Users\\vidus\\Downloads\\prism\\frontend'; & 'C:\\Program Files\\nodejs\\npm.cmd' run dev -- --host 0.0.0.0 --port 5173",
+			"isBackground": true,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Build frontend",
+			"type": "shell",
+			"command": "Set-Location 'C:\\Users\\vidus\\Downloads\\prism\\frontend'; & 'C:\\Program Files\\nodejs\\npm.cmd' run build",
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Verify frontend build after tsconfig fix",
+			"type": "shell",
+			"command": "Set-Location 'C:\\Users\\vidus\\Downloads\\prism\\frontend'; & 'C:\\Program Files\\nodejs\\npm.cmd' run build",
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Rebuild frontend after alias fix",
+			"type": "shell",
+			"command": "Set-Location 'C:\\Users\\vidus\\Downloads\\prism\\frontend'; & 'C:\\Program Files\\nodejs\\npm.cmd' run build",
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Start frontend server after build fix",
+			"type": "shell",
+			"command": "Set-Location 'C:\\Users\\vidus\\Downloads\\prism\\frontend'; & 'C:\\Program Files\\nodejs\\npm.cmd' run dev -- --host 0.0.0.0 --port 5173",
+			"isBackground": true,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Validate frontend build after map layout adjustment",
+			"type": "shell",
+			"command": "Set-Location 'C:\\Users\\vidus\\Downloads\\prism\\frontend'; & 'C:\\Program Files\\nodejs\\npm.cmd' run build",
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		}
+	]
+}

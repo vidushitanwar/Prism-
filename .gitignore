@@ -1,0 +1,49 @@
+# Env / secrets
+.env
+.env.*
+!.env.example
+!**/.env.example
+*.local
+*.secret
+credentials/
+**/credentials/
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+*.cer
+
+# Node
+node_modules/
+dist/
+build/
+coverage/
+*.tsbuildinfo
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+
+# Data
+data/*.db
+*.db
+*.sqlite
+*.sqlite3
+*.db-*
+data/processed/*
+data/raw/*
+!data/processed/.gitkeep
+!data/raw/.gitkeep
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/*.log
+*.swp
