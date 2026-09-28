@@ -9,6 +9,8 @@ PostgreSQL for a production-style run.
 from functools import lru_cache
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+PRODUCTION_FRONTEND_ORIGIN = "https://prism-ui-blond.vercel.app"
+
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
@@ -34,7 +36,10 @@ class Settings(BaseSettings):
 
     @property
     def cors_origins_list(self) -> list[str]:
-        return [origin.strip() for origin in self.CORS_ORIGINS.split(",") if origin.strip()]
+        origins = [origin.strip() for origin in self.CORS_ORIGINS.split(",") if origin.strip()]
+        if PRODUCTION_FRONTEND_ORIGIN not in origins:
+            origins.append(PRODUCTION_FRONTEND_ORIGIN)
+        return origins
 
 
 @lru_cache

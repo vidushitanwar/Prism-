@@ -1,6 +1,7 @@
 # Env / secrets
 .env
 .env.*
+*.env
 !.env.example
 !**/.env.example
 *.local
@@ -34,6 +35,7 @@ data/*.db
 *.sqlite
 *.sqlite3
 *.db-*
+*.sqlite-*
 data/processed/*
 data/raw/*
 !data/processed/.gitkeep

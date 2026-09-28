@@ -1,43 +1,47 @@
-# PRISM — The Living Map of Human Capability
+# PRISM Workforce Intelligence
 
-An interactive workforce intelligence platform that lets you navigate the
-relationships between **skills ↔ occupations ↔ industries ↔ talent ↔
-education ↔ geography ↔ opportunities**, and see how those relationships
-change over time (2022–2026).
+PRISM is an interactive workforce intelligence platform for exploring how
+skills, occupations, industries, talent, education, and geography connect
+and change over time. The included 2022–2026 dataset is synthetic demo data,
+not real-world labor-market statistics.
 
-> **Build status: Phase 8 — Production Readiness (final checkpoint)**
-> All 8 planned phases are implemented. This checkpoint is a full audit
-> pass rather than new features: every frontend `api.*` call was
-> cross-referenced against its backend route (all match), every
-> promise-returning fetch across the app now has proper `.catch`/error UI
-> instead of silently hanging or throwing an unhandled rejection, no
-> placeholder routes remain outside the 404 handler, no hardcoded secrets
-> exist, an unused heavy dependency (`sentence-transformers`) was removed
-> since the actual capability-clustering method is graph-based (see
-> [`docs/methodology.md`](docs/methodology.md)), and the methodology doc
-> was rewritten to describe what the code actually does. See
-> [Limitations](#limitations) for what a *live* install/run audit would
-> still need to confirm, since this sandbox has no internet access to
-> perform one itself.
+## Live deployments
 
-## Architecture
+- **Live Website:** <https://prism-ui-blond.vercel.app>
+- **Backend API:** <https://prism-vidushi9.vercel.app>
+- **API Documentation:** <https://prism-vidushi9.vercel.app/docs>
 
-```
-PRISM_Workforce_Intelligence/
-├── frontend/     React + TypeScript + Vite + Tailwind
-├── backend/      FastAPI + SQLAlchemy (SQLite by default, Postgres-ready)
-├── data/         raw / processed / seed datasets
-├── docs/         methodology.md
-├── docker-compose.yml   optional Postgres service
-└── .env.example
+## Main features
+
+- Interactive workforce graph with search, filters, node details, and map expansion
+- Skill demand timelines, lifecycle indicators, and a Workforce Time Machine
+- Emerging skills, declining skills, structural shifts, and evidence summaries
+- Career routes between occupations based on shared skills
+- Talent profiles, workforce geography, and education-to-skill gap analysis
+- Workforce scenario simulator and guided Demo Mode
+
+## Project structure
+
+```text
+frontend/               React, TypeScript, and Vite application
+  src/                  Pages, components, graph, state, and API client
+backend/                FastAPI application and Vercel entrypoint
+  api/index.py           Vercel ASGI entrypoint
+  app/api/               HTTP route handlers
+  app/analytics/         Workforce analytics
+  app/data/              Catalogs and synthetic data seeding
+  app/db/                SQLAlchemy database setup
+data/                    Seed and generated-data directories
+docs/                    Methodology documentation
+docker-compose.yml       Optional local PostgreSQL service
 ```
 
 ## Tech stack
 
-- **Frontend:** React 18, TypeScript, Vite, Tailwind CSS, React Router, Zustand
+- **Frontend:** React 18, TypeScript, Vite, Tailwind CSS, React Router, Zustand, React Flow
 - **Backend:** Python, FastAPI, SQLAlchemy
-- **Database:** SQLite by default (zero setup) — PostgreSQL supported via `DATABASE_URL`
-- **Analytics:** Pandas, NumPy, scikit-learn, NetworkX (graph-structural capability clustering via community detection — see [`docs/methodology.md`](docs/methodology.md))
+- **Database:** SQLite for zero-setup local development; PostgreSQL is supported
+- **Analytics:** Pandas, NumPy, scikit-learn, and NetworkX
 
 ## Prerequisites
 
@@ -47,39 +51,31 @@ PRISM_Workforce_Intelligence/
 
 ## Setup (VS Code / local machine)
 
-### 1. Clone / unzip and open in VS Code
-
-Unzip `PRISM_Workforce_Intelligence.zip` and open the folder in VS Code.
-
-### 2. Configure environment variables
+### 1. Clone the repository
 
 ```bash
-cp .env.example .env
+git clone https://github.com/vidushitanwar/Prism-.git
+cd Prism-
 ```
 
-The defaults work out of the box (SQLite, localhost CORS). No API keys are
-required for Phase 0.
-
-### 3. Run the backend
-
-Open a terminal in VS Code (`` Ctrl+` ``):
+### 2. Run the backend
 
 ```bash
 cd backend
-python3 -m venv .venv
-source .venv/bin/activate        # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
-uvicorn app.main:app --reload --port 8000
+python -m venv .venv
+# Windows PowerShell: .venv\Scripts\Activate.ps1
+# macOS/Linux: source .venv/bin/activate
+python -m pip install -r requirements.txt
+python -m uvicorn app.main:app --reload --port 8000
 ```
 
-Verify it's alive:
-- http://localhost:8000/ → `{"status": "running", ...}`
-- http://localhost:8000/docs → interactive API docs
-- http://localhost:8000/api/health/db → confirms the SQLite DB is reachable
+The backend uses local SQLite by default and creates/seeds its demo dataset
+on first startup. No API key or `.env` file is required for the local default.
+Check `http://localhost:8000/api/health/db` to verify database connectivity.
 
-### 4. Run the frontend
+### 3. Run the frontend
 
-Open a **second** terminal:
+In a second terminal, from the repository root:
 
 ```bash
 cd frontend
@@ -87,10 +83,9 @@ npm install
 npm run dev
 ```
 
-Open http://localhost:5173 — you should see the PRISM landing page with two
-live status pills ("API: Online", "DB: Online") confirming the full stack
-is connected. Click **Explore Workforce** (or press `Ctrl+K` / `Cmd+K`
-anywhere and search) to open the interactive Workforce Map.
+Open `http://localhost:5173`. The frontend defaults to the local backend at
+`http://localhost:8000/api`; set `VITE_API_BASE_URL` only when using another
+backend URL.
 
 On first run, the backend automatically creates all tables and seeds the
 database (this takes a few seconds) — you don't need a manual step. You
@@ -101,7 +96,7 @@ cd backend
 python -m scripts.seed --force
 ```
 
-### 5. Try the Phase 1 API
+### 4. Explore the API
 
 With the backend running, open http://localhost:8000/docs and try:
 
@@ -136,11 +131,9 @@ With the backend running, open http://localhost:8000/docs and try:
 docker compose up -d
 ```
 
-Then in `.env`, set:
-```
-DATABASE_URL=postgresql+psycopg://prism_user:prism_password@localhost:5432/prism
-```
-Restart the backend.
+Set `POSTGRES_PASSWORD` and `DATABASE_URL` in your local environment using
+your database provider's connection details. Never put credentials in source
+control. SQLite remains the zero-configuration local default.
 
 ## What works right now (Phase 0 through Phase 8)
 
@@ -296,7 +289,7 @@ this sandbox cannot reach the internet to perform one.
 
 - All workforce data is synthetic/seeded (clearly labeled in this README); it does not represent real-world statistics.
 - The Workforce Map re-runs a client-side force layout on data changes rather than persisting node positions — large expansions may briefly re-settle.
-- The node detail panel's Timeline/Related tabs are only populated for skill nodes so far; occupation/industry equivalents would need their own evidence views.
+- The node detail panel's occupation and industry timelines and related entities are derived from linked skill records; the dataset is synthetic and should not be interpreted as real-world labor-market evidence.
 - The Career Route Planner only finds paths through occupations connected by a precomputed transition edge (top-3 highest-overlap per occupation) — a valid path may exist in the fuller graph but not surface if overlap was below the seeding threshold; this is stated in the UI via the route note rather than hidden.
 - The "Why did this change?" breakdown is an explicit heuristic decomposition (related-skill momentum, industry breadth, occupation breadth), not a verified causal/experimental analysis — this is stated directly in the UI.
 - The Workforce Shock Simulator's category-sensitivity coefficients (`app/analytics/simulation.py`) are illustrative and documented in code, not fitted to real labor-market data — every result also carries this disclaimer in the API response and UI.
@@ -304,7 +297,7 @@ this sandbox cannot reach the internet to perform one.
 - The landing page's hero background is still a lightweight decorative SVG network (intentionally distinct from the real, data-driven Workforce Map at `/explore`).
 - The in-app "About → Methodology / Data Sources" navigation items from the original spec are not built as pages; the full methodology write-up lives in [`docs/methodology.md`](docs/methodology.md) instead.
 - Authentication is out of scope for this build; no login is required for any current or planned feature.
-- **Not yet done:** a full Phase 8 production audit — running the actual `npm install` / `pip install` / `uvicorn` / `npm run dev` sequence from a clean checkout, a `npm run build` production bundle check, and a final line-by-line click-through. Everything has been statically syntax-checked (Python compiles cleanly; every frontend file's brackets balance) and cross-referenced (every frontend API call matches a real backend route) in this sandbox, which has no internet access to actually install dependencies — see the note at the top of this conversation.
+- Production hosting still requires configuring the frontend and backend deployment environments and a persistent managed database. The live demo links are listed above.
 
 ## License / data note
 
